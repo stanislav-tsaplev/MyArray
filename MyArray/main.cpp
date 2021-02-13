@@ -1,75 +1,18 @@
 #include <iostream>
 #include <ostream>
+
+#include "int_array.h"
+
 using namespace std;
 
 
-struct IntArray
-{
-    int* _data;
-    int _size;
-
-    IntArray()
-        : _data(NULL), _size(0)
-    {
-    }
-
-public:
-    IntArray(int size)
-        : _size(size)
-    {
-        _data = new int[size];
-    }
-
-    void init()
-    {
-        for (int i = 0; i < _size; i++)
-            _data[i] = 0;
-    }
-
-    int& operator[](int index)
-    {
-        return _data[index];
-    }
-
-    int size()
-    {
-        return _size;
-    }
-
-    IntArray& subarray(int begin, int end)
-    {
-        IntArray* subarray = new IntArray();
-        subarray->_data = _data + begin;
-        subarray->_size = end - begin;
-
-        return *subarray;
-    }
-
-    IntArray& copy()
-    {
-        IntArray* copy = new IntArray(_size);
-        for (int i = 0; i < _size; i++)
-            copy->_data[i] = _data[i];
-
-        return *copy;
-    }
-
-    friend ostream& operator<<(ostream& os, const IntArray& array)
-    {
-        for (int i = 0; i < array._size; i++)
-            os << array._data[i] << ' ';
-
-        return os;
-    }
-};
-
-void merge_sort(IntArray array)
+void merge_sort(int_array array)
 {
     if (array.size() < 2)
         return;
 
-    IntArray left_array = array.subarray(0, array.size() / 2).copy();
-    IntArray right_array = array.subarray(array.size() / 2, array.size()).copy();
+    int_array left_array = array.subarray(0, array.size() / 2).copy();
+    int_array right_array = array.subarray(array.size() / 2, array.size()).copy();
 
     merge_sort(left_array);
     merge_sort(right_array);
@@ -139,7 +82,7 @@ int main()
     //cout << endl;
 
 
-    IntArray my_array(8);
+    int_array my_array(8);
     my_array[0] = 3;
     my_array[1] = 15;
     my_array[2] = 10;
